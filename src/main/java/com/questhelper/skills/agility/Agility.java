@@ -83,11 +83,10 @@ public class Agility extends ComplexStateQuestHelper
 
 		ConditionalStep superStep = new ConditionalStep(this, gnomeStep);
 		superStep.addStep(ag90, ardougne);
-		superStep.addStep(ag80, rellekka);
-
-		superStep.addStep(ag60, seersStep);
-		superStep.addStep(ag70, pollnivneachStep);
-		superStep.addStep(ag40, canifisStep);
+        superStep.addStep(ag80, rellekka);
+        superStep.addStep(ag60, seersStep);
+        superStep.addStep(ag70, pollnivneachStep);
+        superStep.addStep(ag40, canifisStep);
 		superStep.addStep(ag50, faladorStep);
 		superStep.addStep(ag30, varrockStep);
 		superStep.addStep(ag20, alKharidStep);

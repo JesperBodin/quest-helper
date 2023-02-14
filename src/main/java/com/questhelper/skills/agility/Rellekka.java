@@ -4,7 +4,9 @@ import com.questhelper.Zone;
 import com.questhelper.panel.PanelDetails;
 import com.questhelper.questhelpers.QuestHelper;
 import com.questhelper.requirements.ZoneRequirement;
+import com.questhelper.requirements.conditional.Conditions;
 import com.questhelper.steps.ConditionalStep;
+import com.questhelper.steps.DetailedQuestStep;
 import com.questhelper.steps.ObjectStep;
 import com.questhelper.steps.QuestStep;
 import net.runelite.api.ObjectID;
@@ -24,7 +26,7 @@ public class Rellekka extends AgilityCourse
     PanelDetails rellekkaPanels;
 
 
-    public Rellekka(QuestHelper questHelper)
+    protected Rellekka(QuestHelper questHelper)
     {
         super(questHelper);
     }
@@ -93,23 +95,23 @@ public class Rellekka extends AgilityCourse
     protected void addSteps()
     {
         rellekkaStep = new ConditionalStep(this.questHelper, climbRoughWall);
-        rellekkaStep.addStep(inFirstGapZone, leapFirstGap);
-        rellekkaStep.addStep(inFirstRopeZone, walkFirstRope);
-        rellekkaStep.addStep(inSecondGapZone, leapSecondGap);
-        rellekkaStep.addStep(inThirdGapZone, hurdleGap);
-        rellekkaStep.addStep(inSecondRopeZone, walkSecondRope);
-        rellekkaStep.addStep(inFishZone, jumpInFish);
+        rellekkaStep.addStep(new Conditions(inFirstGapZone), leapFirstGap);
+        rellekkaStep.addStep(new Conditions(inFirstRopeZone), walkFirstRope);
+        rellekkaStep.addStep(new Conditions(inSecondGapZone), leapSecondGap);
+        rellekkaStep.addStep(new Conditions(inThirdGapZone), hurdleGap);
+        rellekkaStep.addStep(new Conditions(inSecondRopeZone), walkSecondRope);
+        rellekkaStep.addStep(new Conditions(inFishZone), jumpInFish);
 
+        rellekkaSidebar = new DetailedQuestStep(this.questHelper, "Train agility at the Rellekka Rooftop Course");
+        rellekkaSidebar.addSubSteps(climbRoughWall, leapFirstGap, walkFirstRope, leapSecondGap, hurdleGap, walkSecondRope, jumpInFish);
     }
 
     @Override
     protected PanelDetails getPanelDetails()
     {
-
         rellekkaPanels = new PanelDetails("80 - 90: Rellekka", Collections.singletonList(rellekkaSidebar)
         );
         rellekkaPanels.setLockingStep(this.rellekkaStep);
-
         return rellekkaPanels;
     }
 }
