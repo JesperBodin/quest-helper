@@ -52,7 +52,6 @@ import net.runelite.api.coords.WorldPoint;
 )
 public class Agility extends ComplexStateQuestHelper
 
-	// TODO::Rellekka and Ardougne
 {
 	// Items recommended
 	ItemRequirement bootsOfLightness, gracefulOutfit, gracefulHood, gracefulTop, gracefulLegs, gracefulGloves, gracefulBoots, gracefulCape;
@@ -61,15 +60,13 @@ public class Agility extends ComplexStateQuestHelper
 
 	SkillRequirement ag45;
 
-	AgilityCourse gnomeStronghold, draynorVillage, alKharid, varrock, canifis, falador, seersVillage, pollnivneach, rellekka;
-	ConditionalStep gnomeStep, draynorStep, alKharidStep, varrockStep, canifisStep, faladorStep, seersStep, pollnivneachStep, rellekkaStep;
-	QuestStep ardougne;
+	AgilityCourse gnomeStronghold, draynorVillage, alKharid, varrock, canifis, falador, seersVillage, pollnivneach, rellekka, ardougne;
+	ConditionalStep gnomeStep, draynorStep, alKharidStep, varrockStep, canifisStep, faladorStep, seersStep, pollnivneachStep, rellekkaStep, ardougneStep;
 
 	@Override
 	public QuestStep loadStep()
 	{
 		setupRequirements();
-		setupSteps();
 
 		gnomeStep = gnomeStronghold.loadStep();
 		draynorStep = draynorVillage.loadStep();
@@ -82,8 +79,8 @@ public class Agility extends ComplexStateQuestHelper
         rellekkaStep = rellekka.loadStep();
 
 		ConditionalStep superStep = new ConditionalStep(this, gnomeStep);
-		superStep.addStep(ag90, ardougne);
-        superStep.addStep(ag80, rellekka);
+		superStep.addStep(ag90, ardougneStep);
+        superStep.addStep(ag80, rellekkaStep);
         superStep.addStep(ag60, seersStep);
         superStep.addStep(ag70, pollnivneachStep);
         superStep.addStep(ag40, canifisStep);
@@ -108,6 +105,7 @@ public class Agility extends ComplexStateQuestHelper
 		seersVillage = new SeersVillage(this);
 		pollnivneach = new Pollnivneach(this);
         rellekka = new Rellekka(this);
+        ardougne = new Ardougne(this);
 
 		//Setup skill requirements
 		ag10 = new SkillRequirement(AGILITY, 10);
@@ -175,14 +173,9 @@ public class Agility extends ComplexStateQuestHelper
 		seersVillage.setRecommended(gracefulOutfit);
 		pollnivneach.setRecommended(gracefulOutfit);
         rellekka.setRecommended(gracefulOutfit);
+        ardougne.setRecommended(gracefulOutfit);
 	}
 
-	private void setupSteps()
-	{
-		//Agility courses
-        ardougne = new ObjectStep(this, ObjectID.WOODEN_BEAMS, new WorldPoint(2673, 3298, 0),
-			"Train agility at the Ardougne Rooftop Course.", Collections.EMPTY_LIST, Collections.singletonList(gracefulOutfit));
-	}
 
 	@Override
 	public List<UnlockReward> getUnlockRewards()
@@ -214,10 +207,8 @@ public class Agility extends ComplexStateQuestHelper
 		allSteps.add(seersVillage.getPanelDetails());
 		allSteps.add(pollnivneach.getPanelDetails());
         allSteps.add(rellekka.getPanelDetails());
+        allSteps.add(rellekka.getPanelDetails());
 
-		allSteps.add(
-			new PanelDetails("90 - 99: Ardougne", Collections.singletonList(ardougne))
-		);
 		return allSteps;
 	}
 
